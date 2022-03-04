@@ -21,4 +21,4 @@ Route::get('/discography-histories', [DiscographyHistoryController::class, 'inde
 Route::get('/authorization', [AuthorizationController::class, 'index'])->name('authorization');
 Route::get('/registration', [RegistrationController::class, 'index'])->name('registration');
 Route::POST('/registration/submit', [RegistrationController::class, 'registration'])->name('registration_check');
-Route::POST('/authorization/submit', [AuthorizationController::class, 'authorization'])->name('authorization_submit');
+Route::POST('/authorization_submit', [AuthorizationController::class, 'authorization'])->name('authorization_submit');

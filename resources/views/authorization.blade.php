@@ -2,6 +2,7 @@
 @section('titleblock')Авторизація @endsection
 @section('content')
 <h3>Авторизація</h3>
+
 @if(!empty($errors) && $errors->any())
             <div>
                 <div class="font-medium text-red-600">
@@ -16,8 +17,8 @@
             </div>
             @endif
     <form action="{{route('authorization_submit')}}" method = "POST">
-
-        <input type="text" name = "login" placeholder="Логін">
+        @csrf
+        <input type="text" name = "username" placeholder="Логін">
         <br>
         <br>
         <input type="password" name='password' placeholder="Пароль">
