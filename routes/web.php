@@ -22,3 +22,4 @@ Route::get('/authorization', [AuthorizationController::class, 'index'])->name('a
 Route::get('/registration', [RegistrationController::class, 'index'])->name('registration');
 Route::POST('/registration/submit', [RegistrationController::class, 'registration'])->name('registration_check');
 Route::POST('/authorization_submit', [AuthorizationController::class, 'authorization'])->name('authorization_submit');
+Route::get('/exit', [AuthorizationController::class, 'exit'])->name('exit');

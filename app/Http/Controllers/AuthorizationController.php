@@ -30,12 +30,19 @@ class AuthorizationController extends Controller
         
        
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+            $sesion = session();
+         
+            $request->session()->put('username',$credentials['username']);
             return redirect()->route('main');
         }
  
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records',
         ]);
+    }
+
+    public function exit(Request $request) {
+        $request->session()->forget('username');
+        return redirect()->route('main');
     }
 }

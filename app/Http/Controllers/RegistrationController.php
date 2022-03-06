@@ -20,7 +20,7 @@ class RegistrationController extends Controller
         Password::min(8)
             ->mixedCase()
             ->numbers();
-        $request->validate([
+            $credentials = $request->validate([
             'name' => 'required|string',
             'username' => 'required|string|unique:users,username|min:5',
             'password' => ['required','string','confirmed', Password::min(8)
@@ -34,6 +34,8 @@ class RegistrationController extends Controller
         $user->email = $request->input('email');
         $user->password =Hash::make($request->input('password'));
         $user->save();
+        $sesion = session();
+        $request->session()->put('username',$credentials['username']);
         return redirect()->route('main');     
     /*   User::query()->create([
             'name' => $request->input('name'),
