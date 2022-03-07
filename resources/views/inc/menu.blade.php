@@ -13,14 +13,14 @@
         <td>  
            <a href="{{ route('about') }}" >@lang('menu.navigation.about')</a>
         </td>
-        
-        @if(session()->has('username'))
+      
+        @auth()
         <td>
           <div class="dropdown">
-            <button class="dropbtn">{{session('username')}}</button>
+            <button class="dropbtn">{{ auth()->user()->username }}</button>
             <div class="dropdown-content">
-              <a href="#">Особиста сторінка</a>
-              <a href="#">Налаштування</a>
+              <a href="#">@lang('menu.navigation.Personal_page')</a>
+              <a href="#">@lang('menu.navigation.settings')</a>
               <a href="{{ route('exit') }}">@lang('menu.navigation.exit')</a>
             </div>
           </div>
@@ -32,6 +32,6 @@
         <td>
            <a href="{{ route('registration') }}">@lang('menu.navigation.registration')</a>
         </td>
-        @endif
+        @endauth
         </table>
 </div>

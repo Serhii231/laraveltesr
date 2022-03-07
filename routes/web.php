@@ -8,6 +8,9 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\DiscographyHistoryController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 Route::get('/', [MainController::class, 'index'])->name('main');;
 
@@ -23,3 +26,19 @@ Route::get('/registration', [RegistrationController::class, 'index'])->name('reg
 Route::POST('/registration/submit', [RegistrationController::class, 'registration'])->name('registration_check');
 Route::POST('/authorization_submit', [AuthorizationController::class, 'authorization'])->name('authorization_submit');
 Route::get('/exit', [AuthorizationController::class, 'exit'])->name('exit');
+Auth::routes(['verify' => true]);
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    dd('test');
+    return redirect()->route('main');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

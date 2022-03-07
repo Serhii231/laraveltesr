@@ -8,6 +8,8 @@ return [
         'authorization' => 'Авторизація',
         'registration' => 'Реєстрація',
         'discography_histories' => 'Дискографія ',
-        'exit' => 'Вихід'
+        'exit' => 'Вихід',
+        'Personal_page' => 'Особиста сторінка',
+        'settings' => 'Налаштування',
     ]
 ];

@@ -6,19 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class AuthorizationController extends Controller
 {
     public function index() 
-    {
-        // dd(Auth::user());
-        
+    {   
         return view('authorization');
     }
     
     public function authorization(Request $request)
     {
-        
         $credentials = $request->validate([
             'username' => 'required|string',
             'password' => [
@@ -32,7 +30,7 @@ class AuthorizationController extends Controller
         if (Auth::attempt($credentials)) {
             $sesion = session();
          
-            $request->session()->put('username',$credentials['username']);
+            $request->session()->put('username', $credentials['username']);
             return redirect()->route('main');
         }
  
@@ -41,8 +39,14 @@ class AuthorizationController extends Controller
         ]);
     }
 
-    public function exit(Request $request) {
-        $request->session()->forget('username');
+    public function exit(Request $request)
+    {
+        Auth::logout();
+ 
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
         return redirect()->route('main');
     }
 }
