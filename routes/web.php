@@ -7,8 +7,10 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\AuthorizationController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\AddNewsController;
 use App\Http\Controllers\DiscographyHistoryController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Http\Controllers\VereficationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,19 +28,11 @@ Route::get('/registration', [RegistrationController::class, 'index'])->name('reg
 Route::POST('/registration/submit', [RegistrationController::class, 'registration'])->name('registration_check');
 Route::POST('/authorization_submit', [AuthorizationController::class, 'authorization'])->name('authorization_submit');
 Route::get('/exit', [AuthorizationController::class, 'exit'])->name('exit');
+Route::get('/add_news', [AddNewsController::class, 'index'])->name('add_news');
+Route::post('/add_news', [AddNewsController::class, 'add_news'])->name('addnews');
 Auth::routes(['verify' => true]);
-Route::get('/email/verify', function () {
-    return view('auth.verify');
-})->middleware('auth')->name('verification.notice');
+Route::get('/email/verify', [VereficationController::class, 'index'])->middleware('auth')->name('verification.notice');
 
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    dd('test');
-    return redirect()->route('main');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [VereficationController::class, 'emailverification'])->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+Route::post('/email/verification-notification', [VereficationController::class, 'sendemailverification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');

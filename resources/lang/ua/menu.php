@@ -9,7 +9,8 @@ return [
         'registration' => 'Реєстрація',
         'discography_histories' => 'Дискографія ',
         'exit' => 'Вихід',
-        'Personal_page' => 'Особиста сторінка',
+        'personal_page' => 'Особиста сторінка',
         'settings' => 'Налаштування',
+        'add_news' => 'Добавити новину,'
     ]
 ];

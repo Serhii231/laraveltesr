@@ -19,8 +19,9 @@
           <div class="dropdown">
             <button class="dropbtn">{{ auth()->user()->username }}</button>
             <div class="dropdown-content">
-              <a href="#">@lang('menu.navigation.Personal_page')</a>
+              <a href="#">@lang('menu.navigation.personal_page')</a>
               <a href="#">@lang('menu.navigation.settings')</a>
+              <a href="{{ route('add_news') }}">@lang('menu.navigation.add_news')</a>
               <a href="{{ route('exit') }}">@lang('menu.navigation.exit')</a>
             </div>
           </div>
